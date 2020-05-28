@@ -1,0 +1,35 @@
+<%# <%= form_tag developer_languages_path, :method => "get" do %>
+    <%# <%= label_tag(:lan, "Languages:") %> 
+    <%# <%= text_field_tag :lan, params[:lan] %> 
+    <%# <%= submit_tag("Search", :name => nil)%>
+    
+<%# <% end %> 
+
+    <br>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Programming Language</th>
+                <th>Languages</th>
+                </tr>
+        </thead>
+
+        <tbody>
+            
+            <% @developers.each do |developer| %>
+            <tr>
+                <td><%= developer.id %></td>
+                <td><%= developer.email %></td>
+                <td><%= developer.programming_languages.pluck(:name).join(", ")%></td>                
+                <td><%= developer.languages.pluck(:languagename).join(", ") %></td>
+            </tr>    
+            <% end %>
+
+
+        </tbody>
+    </table>
+
+
