@@ -5,31 +5,6 @@
     
 <%# <% end %> 
 
-    <br>
-
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Email</th>
-                <th>Programming Language</th>
-                <th>Languages</th>
-                </tr>
-        </thead>
-
-        <tbody>
-            
-            <% @developers.each do |developer| %>
-            <tr>
-                <td><%= developer.id %></td>
-                <td><%= developer.email %></td>
-                <td><%= developer.programming_languages.pluck(:name).join(", ")%></td>                
-                <td><%= developer.languages.pluck(:languagename).join(", ") %></td>
-            </tr>    
-            <% end %>
-
-
-        </tbody>
-    </table>
+    
 
 

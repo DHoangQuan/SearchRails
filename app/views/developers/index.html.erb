@@ -1,0 +1,38 @@
+<h1>Searching form</h1>
+<%= form_tag root_path, method: :get do %>
+<h4>Languages:</h4>
+    <%= text_field_tag :language, params[:language], placeholder: 'Accepted correct languages' %>
+    <br>
+    <h4>Programming languages</h4>
+    <%= text_field_tag :programming_language, params[:programming_language], placeholder: 'Accepted correct programming languages' %>
+    <br>
+    <br>
+    <%= submit_tag "Search", name: nil %>
+<% end %>
+
+<%# <td><%= @te </td> %>
+<br>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Programming Language</th>
+                <th>Languages</th>
+                </tr>
+        </thead>
+
+        <tbody>
+            <% @developers.each do |developer| %>
+            <tr>
+                <td><%= developer.id %></td>
+                <td><%= developer.email %></td>
+                <td><%= developer.get_programming_languages_list %></td>
+                <td><%= developer.get_language_list %></td>                
+                <td></td>
+            </tr>    
+            <% end %>
+
+
+        </tbody>
+    </table>
