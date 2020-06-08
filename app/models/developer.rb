@@ -11,18 +11,20 @@ class Developer < ApplicationRecord
     def get_programming_languages_list
         self.programming_languages.map(&:name).join(", ")
     end
-    
+
+    # byebug
     def self.list_languages(params_language)
-        # arrlan = paramslanguage.scan(/\w+/)
+        # arr_languages = params_language.scan(/\w+/)
         # joins(:languages).where(languages: { languagename: arrlan })
         arr_languages = params_language.downcase.gsub(/,/," ").split(/\s/)
-        joins(:languages).where("LOWER(languages.language_name) IN (?)", arr_languages)
+        where("LOWER(languages.language_name) IN (?)", arr_languages)
+        
     end
 
     def self.list_programming_languages(params_programming_language)
-        # arrprolan = parmasprogramminglanguage.scan(/\w+/) 
+        # arr_programming_language = params_programming_language.scan(/\w+/) 
         arr_programming_language = params_programming_language.downcase.gsub(/,/," ").split(/\s/)
-        joins(:programming_languages).where("LOWER(programming_languages.name) IN (?)", arr_programming_language)
+        where("LOWER(programming_languages.name) IN (?)", arr_programming_language)
     end 
 
     def self.list_prolan_lan(params_language, params_programming_language) 

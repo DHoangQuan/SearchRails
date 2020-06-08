@@ -1,10 +1,10 @@
 <h1>Searching form</h1>
 <%= form_tag root_path, method: :get do %>
 <h4>Languages:</h4>
-    <%= text_field_tag :language, params[:language], placeholder: 'Accepted correct languages' %>
+    <%= text_field_tag :languages, params[:languages], placeholder: 'Accepted correct languages' %>
     <br>
     <h4>Programming languages</h4>
-    <%= text_field_tag :programming_language, params[:programming_language], placeholder: 'Accepted correct programming languages' %>
+    <%= text_field_tag :programming_languages, params[:programming_languages], placeholder: 'Accepted correct programming languages' %>
     <br>
     <br>
     <%= submit_tag "Search", name: nil %>
