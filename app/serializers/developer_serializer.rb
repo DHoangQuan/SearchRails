@@ -3,7 +3,7 @@ class DeveloperSerializer < ActiveModel::Serializer
   has_many :languages
   has_many :developer_languages
   def languages
-    languages = object.languages.pluck(:languagename).join(", ")
+    languages = object.languages.pluck(:language_name).join(", ")
   end
   def developer_languages
     developer_languages = object.programming_languages.pluck(:name).join(", ")
