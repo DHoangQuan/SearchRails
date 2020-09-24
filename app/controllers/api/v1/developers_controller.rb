@@ -5,7 +5,11 @@ module Api
                 @developers = 
                  SearchDeveloper.new(params).call.preload(:programming_languages, :languages)
                 #  byebug
-                render json: @developers
+                
+                # old serialize
+                # render json: @developers
+
+                render json: DeveloperSerializer.new(Developer.all).serializable_hash
             end
         end
     end

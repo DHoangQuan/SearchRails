@@ -13,19 +13,19 @@ class Developer < ApplicationRecord
     end
 
     # byebug
-    def self.list_languages(params_language)
-        # arr_languages = params_language.scan(/\w+/)
-        # joins(:languages).where(languages: { languagename: arrlan })
-        arr_languages = params_language.downcase.gsub(/,/," ").split(/\s/)
-        where("LOWER(languages.language_name) IN (?)", arr_languages)
+    # def self.list_languages(params_language)
+    #     # arr_languages = params_language.scan(/\w+/)
+    #     # joins(:languages).where(languages: { languagename: arrlan })
+    #     arr_languages = params_language.downcase.gsub(/,/," ").split(/\s/)
+    #     where("LOWER(languages.language_name) IN (?)", arr_languages)
         
-    end
+    # end
 
-    def self.list_programming_languages(params_programming_language)
-        # arr_programming_language = params_programming_language.scan(/\w+/) 
-        arr_programming_language = params_programming_language.downcase.gsub(/,/," ").split(/\s/)
-        where("LOWER(programming_languages.name) IN (?)", arr_programming_language)
-    end 
+    # def self.list_programming_languages(params_programming_language)
+    #     # arr_programming_language = params_programming_language.scan(/\w+/) 
+    #     arr_programming_language = params_programming_language.downcase.gsub(/,/," ").split(/\s/)
+    #     where("LOWER(programming_languages.name) IN (?)", arr_programming_language)
+    # end 
 
     def self.list_prolan_lan(params_language, params_programming_language) 
         arr_languages = params_language.downcase.gsub(/,/," ").split(/\s/)
