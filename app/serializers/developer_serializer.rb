@@ -16,6 +16,8 @@ class DeveloperSerializer
   has_many :languages, through: :developer_languages
   has_many :programming_languages, through: :developer_programming_languages
 
+  # has_and_belongs_to_many :languages
+  # has_and_belongs_to_many :programming_languages
   attributes :id, :email
   
 end

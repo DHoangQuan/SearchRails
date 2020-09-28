@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do 
       get "/developers", to: 'developers#index'
+      # match '*a', :to => 'errors#render_404'
     end
   end
   resources :developers, only: :index
+  # match '*a', :to => 'errors#routing'
 end

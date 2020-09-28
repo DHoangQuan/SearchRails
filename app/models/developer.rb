@@ -3,7 +3,7 @@ class Developer < ApplicationRecord
     has_many :developer_languages
     has_many :languages, through: :developer_languages   
     has_many :programming_languages, through: :developer_programming_languages
-    
+
     def get_language_list
         self.languages.pluck(:language_name).join(", ")
     end
