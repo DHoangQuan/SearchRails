@@ -21,7 +21,7 @@ class DevelopersController < ApplicationController
         # end
         
         # render json: @developers
-        
+        # render json: DeveloperSerializer.new(@developers,include: [:languages, :programming_languages])
         respond_to do |format|
             format.html
         end

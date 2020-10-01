@@ -22,11 +22,13 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-gem 'active_model_serializers'
+# gem 'active_model_serializers'
 gem 'i18n', '~>1.8.3'
 
 gem 'fast_jsonapi'
+# gem 'jsonapi-rails'
 
+gem 'will_paginate', '~> 3.1.0'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
