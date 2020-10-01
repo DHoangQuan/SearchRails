@@ -5,9 +5,6 @@ module Api
                 # .paginate(page: params[:page], per_page: 10)
                 @developers = SearchDeveloper.new(params).call.preload(:programming_languages, :languages).paginate(page: params[:page], per_page: 10)
                 #  byebug
-                
-                # old serialize
-                # render json: @developers
                 options = {}
                 options[:meta] = { 
                     # total: 2
@@ -16,7 +13,6 @@ module Api
                     total_count: @developers.count # use collection.total_entries when using will_paginate
                     }
                 options[:include] = [:languages, :programming_languages]
-                # render json: DeveloperSerializer.new(@developers,include: [:languages, :programming_languages])
                 render json: DeveloperSerializer.new(@developers, options).serialized_json
     
             end
@@ -35,31 +31,25 @@ module Api
             end
 
             def create
-                byebug
-                developer = Developer.new(develoepr_params)
+                # byebug
+                developer = Developer.new(developer_params)
                 if developer.save
                     render json: {
                         success: true,
-                        # data: DeveloperSerializer.new(developers)
+                        data: DeveloperSerializer.new(developer)
                     }
-                # else
+                else
                 
-                #     render_error(404, "title", "e") and return
+                    render_error(404, "title", "e") and return
                 end
             end
 
-            def pagination_dict(collection)
-                {
-                  current_page: collection.current_page,
-                  total_pages: collection.total_pages,
-                  total_count: collection.count # use collection.total_entries when using will_paginate
-                }
-              end
 
             private
             def developer_params
-                byebug
-                params.require(:developer).permit(:email)
+                # byebug
+                # params.require(:developer).permit(:data => [:attributes])
+                params.require(:data).permit(:attributes => [:email])
             end
 
             

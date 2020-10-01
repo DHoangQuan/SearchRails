@@ -1,15 +1,7 @@
 class ApplicationController < ActionController::Base
+  protect_from_forgery unless: -> { request.format.json? }
   private
   def render_error( status, title,message)
-    
-    # errors_arr = []
-    # byebug
-    # resource.errors.each do |e|
-      
-    #   errors_arr << e
-    
-    # end
-    # byebug
     error_hash = {
         errors: [
           status: status,
