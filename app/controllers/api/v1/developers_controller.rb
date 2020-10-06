@@ -1,6 +1,7 @@
 module Api
     module V1
         class DevelopersController < ApplicationController
+            before_action :authenticate_user!
             def index
                 # .paginate(page: params[:page], per_page: 10)
                 @developers = SearchDeveloper.new(params).call.preload(:programming_languages, :languages).paginate(page: params[:page], per_page: 10)
@@ -31,24 +32,18 @@ module Api
             end
 
             def create
-                arr_id_languages = developer_languages_params.dig(:relationships, :languages, :data)
-                arr_id_programming_languages = developer_programming_languages_params.dig(:relationships, :programming_languages, :data)
+                arr_id_languages = developer_languages_params.dig(:relationships, :languages, :data).pluck(:id)
+                arr_id_programming_languages = developer_programming_languages_params.dig(:relationships, :programming_languages, :data).pluck(:id)
                 developer = Developer.new(developer_params)
                 ActiveRecord::Base.transaction do
                     developer.save
-                    
-                    arr_id_languages.each do |id|    
-                        # byebug    
-                        language = Language.find(id.values[0].to_i)
-                        developer.languages << language
-                        # raise ActiveRecord::RecordInvalid if language.nil?
-                    end
 
-                    arr_id_programming_languages.each do |id|
-                        programming_language = ProgrammingLanguage.find(id.values[0].to_i)
-                        developer.programming_languages << programming_language
-                        # raise ActiveRecord::RecordInvalid if programming_language.nil?
-                    end
+                    languages = Language.where(id: arr_id_languages)
+                    developer.languages << languages
+
+                    programming_languages = ProgrammingLanguage.where(id: arr_id_programming_languages)
+                    developer.programming_languages << programming_languages
+
                 end
                 render json: {
                         success: true,
@@ -72,6 +67,16 @@ module Api
             def developer_programming_languages_params
                 params.require(:data).permit(:relationships => [:programming_languages => [:data => [:id]]])
             end
+            
+            # def authenticate
+            #     authenticate_or_request_with_http_token do |token, _options|
+            #         User.find_by(token: token)
+            #     end
+            # end
+        
+            # def current_user
+            #     @current_user ||= authenticate
+            # end
 
         end
     end

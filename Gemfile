@@ -27,6 +27,9 @@ gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'mast
 # gem 'active_model_serializers'
 gem 'i18n', '~>1.8.3'
 
+# gem authorization api
+gem 'devise_token_auth'
+
 gem 'fast_jsonapi'
 # gem 'jsonapi-rails'
 
@@ -50,6 +53,9 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do
