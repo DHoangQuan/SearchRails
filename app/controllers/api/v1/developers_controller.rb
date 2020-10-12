@@ -3,8 +3,8 @@ module Api
         class DevelopersController < ApplicationController
             before_action :authenticate_user!
             def index
-                # .paginate(page: params[:page], per_page: 10)
-                @developers = SearchDeveloper.new(params).call.preload(:programming_languages, :languages).paginate(page: params[:page], per_page: 10)
+                # byebug
+                @developers = SearchDeveloper.new(search_params).call.preload(:programming_languages, :languages).paginate(page: params[:page], per_page: 10)
                 #  byebug
                 options = {}
                 options[:meta] = { 
@@ -22,6 +22,7 @@ module Api
                 begin
                 # byebug
                 @developer = Developer.find(params[:id])
+                
                 render json: DeveloperSerializer.new(@developer,include: [:languages, :programming_languages])
                 # rescue ActiveRecord::RecordNotFound => e
                 rescue StandardError, AnotherError => e
@@ -32,31 +33,52 @@ module Api
             end
 
             def create
-                arr_id_languages = developer_languages_params.dig(:relationships, :languages, :data).pluck(:id)
-                arr_id_programming_languages = developer_programming_languages_params.dig(:relationships, :programming_languages, :data).pluck(:id)
-                developer = Developer.new(developer_params)
-                ActiveRecord::Base.transaction do
-                    developer.save
+                if current_user.is_admin?
+                    arr_id_languages = developer_languages_params.dig(:relationships, :languages, :data).pluck(:id)
+                    arr_id_programming_languages = developer_programming_languages_params.dig(:relationships, :programming_languages, :data).pluck(:id)
+                    developer = Developer.new(developer_params)
+                    ActiveRecord::Base.transaction do
+                        developer.save
 
-                    languages = Language.where(id: arr_id_languages)
-                    developer.languages << languages
+                        languages = Language.where(id: arr_id_languages)
+                        developer.languages << languages
 
-                    programming_languages = ProgrammingLanguage.where(id: arr_id_programming_languages)
-                    developer.programming_languages << programming_languages
+                        programming_languages = ProgrammingLanguage.where(id: arr_id_programming_languages)
+                        developer.programming_languages << programming_languages
 
+                    end
+                    render json: {
+                            success: true,
+                            data: DeveloperSerializer.new(developer)
+                        }
+                
                 end
-                render json: {
-                        success: true,
-                        data: DeveloperSerializer.new(developer)
-                    }
             rescue ActiveRecord::RecordInvalid => e
-            render_error(404, "NotFound", e) and return
+                render_error(404, "NotFound", e) and return
             end
 
             
 
             private
+            # def set_user
+            #     # byebug
+            #     uid        = request.headers['uid']
+            #     @token     = request.headers['access-token']
+            #     @client_id = request.headers['client']
+            #     @User = User.find_by_uid(uid)
+                
+            # end
+
+            def search_params
+                if params.blank?
+                params.require(:filter).permit(:languages, :programming_languages)
+                else
+                    params
+                end
+            end
+
             def developer_params
+                # byebug
                 params.require(:data).permit(:attributes => [:email])
             end
 

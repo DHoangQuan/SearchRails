@@ -8,4 +8,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
+
+  def is_admin?
+    self.role == "Admin"
+  end
+
+  def is_user?
+    self.role == "User"
+  end
 end

@@ -9,10 +9,6 @@ Rails.application.routes.draw do
       # get "/developers", to: 'developers#index'
       # get '/404', to: 'errors#not_found'
       resources :developers
-      # devise_scope :user do
-      #   post "sign_up", to: "registrations#create"
-      #   post "sign_in", to: "sessions#create"
-      # end
     end
   end
   resources :developers, only: :index
