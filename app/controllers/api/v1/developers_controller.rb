@@ -33,7 +33,7 @@ module Api
             end
 
             def create
-                if current_user.is_admin?
+                if current_user.is_user?
                     arr_id_languages = developer_languages_params.dig(:relationships, :languages, :data).pluck(:id)
                     arr_id_programming_languages = developer_programming_languages_params.dig(:relationships, :programming_languages, :data).pluck(:id)
                     developer = Developer.new(developer_params)
@@ -51,7 +51,8 @@ module Api
                             success: true,
                             data: DeveloperSerializer.new(developer)
                         }
-                
+                else
+                    render_error(403, "FORBIDDEN", "The server understood the request but refuses to authorize it.")
                 end
             rescue ActiveRecord::RecordInvalid => e
                 render_error(404, "NotFound", e) and return
