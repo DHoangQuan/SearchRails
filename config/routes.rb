@@ -6,11 +6,8 @@ Rails.application.routes.draw do
   root 'developers#index'  
   namespace :api do
     namespace :v1 do 
-      # get "/developers", to: 'developers#index'
-      # get '/404', to: 'errors#not_found'
       resources :developers
     end
   end
   resources :developers, only: :index
-  # match '*a', :to => 'errors#routing'
 end

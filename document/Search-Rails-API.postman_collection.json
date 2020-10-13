@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "127a03f5-8979-41f3-a187-0facb4018a04",
+		"name": "Search-Rails-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            \"email\": \"Register@email.com\",\n            \"password\": \"password1111\",\n            \"passwordconfirm\": \"password1111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ENDPOINT}}/auth",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Developers",
+			"item": [
+				{
+					"name": "Lish all developers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get developer",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access-token",
+								"value": "{{access-token}}",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "{{client}}",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "{{expiry}}",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "{{uid}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_ENDPOINT}}/developers/10",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"developers",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search developer by languages and programming languages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create developer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "access-token",
+								"value": "{{access-token}}",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "{{client}}",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "{{expiry}}",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "{{uid}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"developer\",\n        \"attributes\": {\n            \"email\": \"testadd@carter.co\"\n        },\n        \"relationships\": {\n            \"languages\": {\n                \"data\": [\n                    {\n                        \"id\": \"6\",\n                        \"type\": \"language\"\n                    },\n                    {\n                        \"id\": \"3\",\n                        \"type\": \"language\"\n                    }\n                ]\n            },\n            \"programming_languages\": {\n                \"data\": [\n                    {\n                        \"id\": \"4\",\n                        \"type\": \"programming_language\"\n                    },\n                    {\n                        \"id\": \"5\",\n                        \"type\": \"programming_language\"\n                    }\n                ]\n            }\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ENDPOINT}}/developers",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"developers"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Admin Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b482799-eded-4ee6-abeb-eb797c9823c6",
+								"exec": [
+									"pm.environment.set(\"access-token\", postman.getResponseHeader(\"access-token\"));",
+									"pm.environment.set(\"client\", postman.getResponseHeader(\"client\"));",
+									"pm.environment.set(\"uid\", postman.getResponseHeader(\"uid\"));",
+									"pm.environment.set(\"expiry\", postman.getResponseHeader(\"expiry\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            \"email\": \"test1111@email.com\",\n            \"password\": \"password1111\"\n  \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ENDPOINT}}/auth/sign_in",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"auth",
+								"sign_in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c137fef5-a0c9-483d-9627-6bcbad04df72",
+								"exec": [
+									"pm.environment.set(\"access-token\", postman.getResponseHeader(\"access-token\"));",
+									"pm.environment.set(\"client\", postman.getResponseHeader(\"client\"));",
+									"pm.environment.set(\"uid\", postman.getResponseHeader(\"uid\"));",
+									"pm.environment.set(\"expiry\", postman.getResponseHeader(\"expiry\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            \"email\": \"test1122@email.com\",\n            \"password\": \"password1111\" \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ENDPOINT}}/auth/sign_in",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"auth",
+								"sign_in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n            \"uid\": \"{{uid}}\",\n            \"client\": \"{{client}}\",\n            \"access-token\": \"{{access-token}}\"\n            \n       \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ENDPOINT}}/auth/sign_out",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"auth",
+								"sign_out"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate token",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n            \"uid\": \"{{uid}}\",\n            \"client\": \"{{client}}\",\n            \"access-token\": \"{{access-token}}\"\n            \n       \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ENDPOINT}}/auth/validate_token",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"auth",
+								"validate_token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

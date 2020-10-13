@@ -33,7 +33,7 @@ module Api
             end
 
             def create
-                if current_user.is_user?
+                if current_user.is_admin?
                     arr_id_languages = developer_languages_params.dig(:relationships, :languages, :data).pluck(:id)
                     arr_id_programming_languages = developer_programming_languages_params.dig(:relationships, :programming_languages, :data).pluck(:id)
                     developer = Developer.new(developer_params)
@@ -79,7 +79,6 @@ module Api
             end
 
             def developer_params
-                # byebug
                 params.require(:data).permit(:attributes => [:email])
             end
 
@@ -90,16 +89,6 @@ module Api
             def developer_programming_languages_params
                 params.require(:data).permit(:relationships => [:programming_languages => [:data => [:id]]])
             end
-            
-            # def authenticate
-            #     authenticate_or_request_with_http_token do |token, _options|
-            #         User.find_by(token: token)
-            #     end
-            # end
-        
-            # def current_user
-            #     @current_user ||= authenticate
-            # end
 
         end
     end
