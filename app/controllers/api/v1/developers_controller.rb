@@ -33,9 +33,11 @@ module Api
             end
 
             def create
+                # byebug
                 if current_user.is_admin?
                     arr_id_languages = developer_languages_params.dig(:relationships, :languages, :data).pluck(:id)
                     arr_id_programming_languages = developer_programming_languages_params.dig(:relationships, :programming_languages, :data).pluck(:id)
+                    
                     developer = Developer.new(developer_params)
                     ActiveRecord::Base.transaction do
                         developer.save
@@ -47,10 +49,14 @@ module Api
                         developer.programming_languages << programming_languages
 
                     end
-                    render json: {
-                            success: true,
-                            data: DeveloperSerializer.new(developer)
-                        }
+
+                    # for test multiple developer
+                    # developer_params.each do |p|
+                    #     developer = Developer.new(p.permit(:attributes => [:email]))
+                    #     developer.save
+                    #     end
+                    render json: DeveloperSerializer.new(developer)
+                        
                 else
                     render_error(403, "FORBIDDEN", "The server understood the request but refuses to authorize it.")
                 end
@@ -80,6 +86,8 @@ module Api
 
             def developer_params
                 params.require(:data).permit(:attributes => [:email])
+                # params.dig(:data).pluck(:attributes)
+                # params.require(:data)
             end
 
             def developer_languages_params
