@@ -1,4 +1,5 @@
 class DevelopersController < ApplicationController
+    require "csv"
     def index
         # byebug    
         @developers = SearchDeveloper.new(params).call
@@ -19,7 +20,7 @@ class DevelopersController < ApplicationController
         #     # list2 = Developer.list_programming_languages(params[:prolan])
         #     # @developers = list1.merge(list2)
         # end
-        
+        @@dev = @developers
         # render json: @developers
         # render json: DeveloperSerializer.new(@developers,include: [:languages, :programming_languages])
         respond_to do |format|
@@ -36,5 +37,35 @@ class DevelopersController < ApplicationController
         # render json: @developers_temp
         
         
+    end
+    def export_csv
+        # byebug
+        respond_to do |format|
+            
+            format.csv { send_data to_csv(@@dev), filename: "developers.csv"}
+        end
+    end
+    
+    private
+
+    # def to_csv (developers)
+    #     attributes = %w(id email programming_languages languages)
+    #     CSV.generate(headers: true) do |csv|
+    #         csv << attributes
+    #         developers.each do |dev|
+
+    #             csv << attributes.map {|attr| dev.send(attr)}
+                
+    #         end
+    #     end
+    # end
+
+    def to_csv (developers)
+        CSV.generate do |csv|
+            csv << ["id", "email", "programming_languages", "languages"]
+            developers.each do |dev|
+                csv << [dev.id, dev.email, dev.get_programming_languages_list, dev.get_language_list]
+            end
+        end
     end
 end

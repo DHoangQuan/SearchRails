@@ -39,6 +39,6 @@ class Developer < ApplicationRecord
     #short query
     # Developer.joins(:languages, :programming_languages).where(languages: { id: lan_ids }, programming_languages: { id: pro_lan_ids })
     
-    
+
     
 end

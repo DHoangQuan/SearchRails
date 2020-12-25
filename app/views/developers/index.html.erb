@@ -10,7 +10,12 @@
     <br>
     <%= submit_tag "Search", name: nil %>
 <% end %>
-
+<div>
+        <p>
+            Download:
+            <%= link_to "export_csv", export_csv_developers_path(format: :csv) %>
+        </p>
+    </div>
 <%# <td><%= @te </td> %>
 <br>
     <table>
@@ -37,3 +42,4 @@
 
         </tbody>
     </table>
+    

@@ -9,5 +9,9 @@ Rails.application.routes.draw do
       resources :developers
     end
   end
-  resources :developers, only: :index
+  resources :developers, only: [:index] do
+    collection do
+      get :export_csv
+    end
+  end
 end
